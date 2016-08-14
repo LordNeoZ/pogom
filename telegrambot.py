@@ -51,14 +51,16 @@ def alarm(bot, job):
             pok_id = str(row[2])
             latitude = str(row[3])
             longitude = str(row[4])
-            disappear = str(row[5])
-            link = "http://maps.google.com/maps?q=" + latitude + "," + longitude + "&ll=" + latitude + "," + longitude + "&z=17"
-            text_message = "Pokemon number " + pok_id + \
-            "\nDisappear at :" + disappear + "\n" + link + \
+            time = str(row[5])
+            disappear = time[14:16]
+            image = "http://maps.googleapis.com/maps/api/staticmap?maptype=roadmap&center=" + latitude + "," + longitude + "&zoom=17&size=640x400&markers=color:blue%7Clabel:P%7C" + latitude + "," + longitude
+            text_message = "Pokemon # " + pok_id + \
+            "\nDisappear at minute :" + disappear + "\n" + \
             "\n/unset to stop the scan"
             if encounter_id not in sent:
                 sent[encounter_id] = (encounter_id,spaw_point,pok_id,latitude,longitude,disappear)
                 """Function to send the message"""
+                bot.sendPhoto(job.context[0], photo=image)
                 bot.sendMessage(job.context[0], text = text_message)
 
 
